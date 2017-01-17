@@ -1,0 +1,22 @@
+{
+  "name": "webpack-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate project for Webpack / ES6 / React",
+  "main": "index.js",
+  "repository": "git@github.com:Undistraction/webpack-boilerplate.git",
+  "author": "Pedr Browne <pedr.browne@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webpack-dev-server": "2.2.0-rc.0"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^2.26.0",
+    "nodemon": "^1.11.0",
+    "webpack": "beta",
+    "webpack-merge": "^2.4.0"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --env development --content-base build ",
+    "build": "webpack --env production"
+  }
+}
