@@ -7,8 +7,12 @@
 // Library Imports
 const path = require('path');
 const webpack = require('webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
+
+// Webpack Plugins
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const HtmlWebpackTemplate = require('html-webpack-template');
 
 // Local Imports
 const parts = require('./webpack.parts');
@@ -27,7 +31,7 @@ const common = merge(
   {
     // Starting point for compilation.
     entry: {
-      app: PATHS.app
+      app: path.join(PATHS.app, 'js')
     },
     output: {
       // path to the generated file(s).
@@ -35,13 +39,24 @@ const common = merge(
     },
     plugins: [
       // Easy generation of HTML index page.
-      new HTMLWebpackPlugin({ title: 'Webpack Boilerplate' })
-    ]
+      new HTMLWebpackPlugin({
+        template: HtmlWebpackTemplate,
+        title: 'Webpack Boilerplate',
+        appMountId: 'app',
+        mobile: true, // Scale page on mobile
+        inject: false // html-webpack-template requires this to work
+      })
+    ],
+    resolve: {
+      extensions: ['.js', '.jsx']
+    }
   },
   // Lint any JavaScript files using ESLint.
   parts.lintJavaScript(PATHS.app),
   // Lint any styles using Stylelint.
-  parts.lintCSS(PATHS.app)
+  parts.lintCSS(PATHS.app),
+  // Generate favicons
+  parts.generateFavicons()
 );
 
 module.exports = function (env) {
@@ -58,7 +73,9 @@ module.exports = function (env) {
         },
         plugins: [
           // Use hashes instead of numerical Ids for generated modules.
-          new webpack.HashedModuleIdsPlugin()
+          new webpack.HashedModuleIdsPlugin(),
+          // Display a progress bar during bundling
+          new ProgressBarPlugin()
         ],
         // Throw an error when performance issues are discovered during build.
         performance: {
@@ -115,7 +132,6 @@ module.exports = function (env) {
       },
       // Transpile JavaScript using Babel, using the default cache directory
       parts.loadJavaScript(PATHS.app, { cacheDirectory: true }),
-
       // The `type` parameter governs the type of sourcemap generated. `eval-source-map` is slow to
       // build, but faster to rebuild and is very accurate. For faster build and rebuild, but less
       // accuracy (lines only) `cheap-eval-source-map` can be used.

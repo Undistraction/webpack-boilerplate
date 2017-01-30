@@ -1,11 +1,16 @@
 const webpack = require('webpack');
+
+const StyleLint = require('stylelint');
+
+// Webpack Plugins
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack-plugin');
-const StyleLint = require('stylelint');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const STYLES_REGEX = /\.css$/;
+const JS_REGEX = /\.jsx?$/;
+const IMAGES_REGEX = /\.(jpg|png)$/;
 
 // Check if module is a vendored library by checking its path for the presence of 'node_modules'.
 function moduleIsVendor(module) {
@@ -49,7 +54,7 @@ exports.lintJavaScript = function (paths) {
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: JS_REGEX,
           include: paths,
           use: 'eslint-loader',
           // Run before other loaders that handle .js files
@@ -66,7 +71,7 @@ exports.loadJavaScript = function (paths, cacheDirectory = false) {
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: JS_REGEX,
           include: paths,
           loader: 'babel-loader',
           options: {
@@ -115,7 +120,7 @@ exports.lintCSS = function (paths) {
     module: {
       rules: [
         {
-          test: /\.css$/,
+          test: STYLES_REGEX,
           include: paths,
           // Run before other loaders
           enforce: 'pre',
@@ -155,11 +160,15 @@ exports.loadCSS = function (paths) {
             {
               loader: 'css-loader',
               options: {
-                modules: true
+                modules: false,
+                sourceMap: true
               }
             },
             {
-              loader: 'postcss-loader'
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: 'inline'
+              }
             }
           ]
         }
@@ -234,7 +243,7 @@ exports.loadImages = function () {
     module: {
       rules: [
         {
-          test: /\.(jpg|png)$/,
+          test: IMAGES_REGEX,
           loader: 'url-loader',
           options: {
             // File-size limit (in bytes), upto which images will stored as a data-url.
@@ -271,6 +280,17 @@ exports.clean = function (path) {
   return {
     plugins: [
       new CleanWebpackPlugin([path])
+    ]
+  };
+};
+
+// Use a base image to generate necessary favicons
+exports.generateFavicons = function () {
+  return {
+    plugins: [
+      new FaviconsWebpackPlugin({
+        logo: './app/images/favicon/favicon_base.png'
+      })
     ]
   };
 };

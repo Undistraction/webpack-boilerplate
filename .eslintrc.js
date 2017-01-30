@@ -1,10 +1,19 @@
 module.exports = {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react"
+  ],
   "env": {
     "browser": true
   },
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "rules": {
     "comma-dangle": ["error", {
