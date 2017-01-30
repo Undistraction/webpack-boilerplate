@@ -1,6 +1,6 @@
 # Webpack Boilerplate
 
-Boilerplate project for using Webpack with ES6 and React based on the setup outlined in
+Simple project for using Webpack with ES6 and React based on the setup outlined in
 [Survive JS: Webpack](https://leanpub.com/survivejs-webpack).
 
 ## Package Management
@@ -27,7 +27,7 @@ yarn run start
 
 ### Production
 
-When generating a bundle for production, we run a number of additional optimisations.
+When generating a bundle for production, we run additional optimisations.
 
 ```
 yarn run build
@@ -37,11 +37,11 @@ yarn run build
 
 ### Transpilation
 
-This project uses [Babel](https://babeljs.io/) to transpile code written in ES6 to ES5 that is suitable for all supported browsers. Configuration for babel, including rules governing supported browsers can be found in `.babelrc`. Although Babel uses a series of plugins to transpile to ES2015, it also requires a polyfill to patch ES2015 features that aren't already supported by some browsers. This project uses [babel-preset-env](https://github.com/babel/babel-preset-env) to conditionally apply the both plugins and polyfill based on the browsers that need to be supported and configures it in `.babelrc`. It also uses a preset for React (and .jsx) support, and a plugin to enable HMR in React.
+This project uses [Babel](https://babeljs.io/) to transpile code written in ES6 to ES5 that is suitable for all supported browsers. Configuration for babel, including rules governing supported browsers are found in `.babelrc`. Although Babel uses a series of plugins to transpile to ES2015, it also requires a polyfill to patch ES2015 features that aren't already supported by some browsers. This project uses [babel-preset-env](https://github.com/babel/babel-preset-env) to conditionally apply the both plugins and polyfill based on the browsers that need to be supported and configures it in `.babelrc`. It also uses a preset for React (and .jsx) support, and a plugin to enable HMR in React.
 
 ### Styles
 
-This project uses PostCSS to extend CSS in a number of ways.
+This project uses PostCSS to extend CSS in various ways.
 
 - [postcss-import](https://github.com/postcss/postcss-import) Allows Sass-style imports.
 - [postcss-simple-vars](https://github.com/postcss/postcss-simple-vars) Sass-style variables.
@@ -53,7 +53,7 @@ This project uses PostCSS to extend CSS in a number of ways.
 
 ### Browser Support
 
-In terms of CSS support, both Babel and PostCSS are configured to provide support for the last two versions of all major browsers.
+Both Babel and PostCSS are configured to provide support for the last two versions of all major browsers.
 
 ### Minification
 
@@ -63,14 +63,14 @@ In terms of CSS support, both Babel and PostCSS are configured to provide suppor
 
 ### JavaScript
 
-All JavaScript files automatically with [ESLint](http://eslint.org/). Rules are based on Airbnb's [JavaScript styleguide](https://github.com/airbnb/javascript), with rules superceding Airbnb's ruleset defined in `.eslintrc.js` and a list of files to be excluded from being linted stored in `.eslintignore`.
+All JavaScript files automatically with [ESLint](http://eslint.org/). Rules based on Airbnb's [JavaScript styleguide](https://github.com/airbnb/javascript), with rules superseding Airbnb's ruleset defined in `.eslintrc.js` and a list of files excluded from linting stored in `.eslintignore`.
 
 ### Styles
 
-All style are linted with [style-lint](https://github.com/stylelint/stylelint), with rules based on
+All style linted with [style-lint](https://github.com/stylelint/stylelint), using rules based on
 their own standard set.
 
-Rules superceding the base ruleset are defined in `.stylelintrc.`
+Rules superseding the base ruleset are defined in `.stylelintrc.`
 
 ## Todos
 
