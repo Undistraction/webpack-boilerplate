@@ -10,5 +10,12 @@
         "modules": false
       }
     ]
-  ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    }
+  }
 }
