@@ -1,4 +1,4 @@
-# webpack-boilerplate
+# Webpack Boilerplate
 
 Boilerplate project for using Webpack with ES6 and React based on the setup outlined in
 [Survive JS: Webpack](https://leanpub.com/survivejs-webpack).
