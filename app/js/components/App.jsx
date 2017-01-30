@@ -1,6 +1,7 @@
 import React from 'react';
+import Comp from './Comp';
 
-export default class Application extends React.Component {
+export default class App extends React.Component {
 
   render() {
     if (this.props.name === null) {
@@ -10,11 +11,12 @@ export default class Application extends React.Component {
     return (
       <div className="App">
         <h1 className="App-title">{this.props.name}</h1>
+        <Comp name={'Comp'} />
       </div>
     );
   }
 }
 
-Application.propTypes = {
+App.propTypes = {
   name: React.PropTypes.string.isRequired
 };

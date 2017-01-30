@@ -60,6 +60,8 @@ const common = merge(
 );
 
 module.exports = function (env) {
+  // Expose our environment to Babel
+  process.env.BABEL_ENV = env;
   // Configuration for production builds.
   if (env === PRODUCTION) {
     return merge([
