@@ -1,21 +1,27 @@
 {
   "presets": [
+      // Add support for React / JSX
       "react",
     [
+      // Configure babel-preset-env, which dynamically applies plugins and polyfills based on chosen
+      // browser support-
       "env",
       {
         "targets": {
           "browsers": ["last 2 versions"]
         },
+        // Just use ES6 imports
         "modules": false
       }
     ]
   ],
   "env": {
+    // Enable React HMR in development
     "development": {
       "plugins": [
         "react-hot-loader/babel"
       ]
     }
-  }
+  },
+  "plugins": ["transform-object-rest-spread"]
 }
