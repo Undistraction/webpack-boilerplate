@@ -221,18 +221,14 @@ exports.purifyCSS = function (paths) {
   return {
     plugins: [
       new PurifyCSSPlugin({
-        // Our paths are absolute so Purify needs patching
-        // against that to work.
+        // We use absolute paths so Purify must too.
         basePath: '/',
 
-        // `paths` is used to point PurifyCSS to files not
-        // visible to Webpack. This expects glob patterns so
-        // we adapt here.
+        // `paths` is used to point PurifyCSS to files not visible to Webpack. This expects glob
+        // patterns so we adapt here.
         paths: paths.map(path => `${path}/*`),
 
-        // Walk through only html files within node_modules. It
-        // picks up .js files by default!
-        resolveExtensions: ['.html']
+        // Only .js files are picked up by default.
         resolveExtensions: ['.html', '.jsx']
       })
     ]
