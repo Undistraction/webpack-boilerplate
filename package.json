@@ -40,6 +40,7 @@
     "postcss-import": "^9.1.0",
     "postcss-loader": "^1.2.2",
     "postcss-nested": "^1.0.0",
+    "postcss-reporter": "^3.0.0",
     "postcss-simple-vars": "^3.0.0",
     "progress-bar-webpack-plugin": "^1.9.3",
     "purifycss-webpack-plugin": "2.0.3",

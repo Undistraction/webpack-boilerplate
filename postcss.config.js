@@ -8,6 +8,7 @@ module.exports = {
     require('postcss-import')(),
     require('postcss-simple-vars'),
     require('postcss-nested'),
-    require('postcss-color-function')
+    require('postcss-color-function'),
+    require("postcss-reporter")({ clearMessages: true })
   ]
 };
