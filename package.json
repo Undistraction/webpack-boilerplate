@@ -57,7 +57,7 @@
     "webpack-merge": "^2.4.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --env development",
+    "start": "webpack-dev-server --env development --open",
     "build": "webpack --env production",
     "test:lint": "eslint . --cache"
   }
