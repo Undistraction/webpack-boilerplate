@@ -1,10 +1,10 @@
 @import '_comp';
 
 .App {
-  color: #0F0;
+  color: #0f0;
 }
 
 body {
-  background: #EEE;
+  background: #eee;
   background: rgba(220, 220, 220, 0.9);
 }

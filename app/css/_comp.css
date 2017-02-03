@@ -1,9 +1,9 @@
-$colour: #F00E0A;
+$colour: #f00e0a;
 
 .Comp {
   color: $colour;
 
   @media (max-width: 500px) {
-    color: #0FFFFF;
+    color: #0fffff;
   }
 }
