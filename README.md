@@ -33,6 +33,18 @@ When generating a bundle for production, we run additional optimisations.
 yarn run build
 ```
 
+## Tests
+
+Test are provides by [Jest](https://github.com/facebook/jest) and can be run using:
+
+```
+yarn run test
+```
+
+Jest configuration is found in `.jestrc`.
+
+If there are any issues with compilation after changes to this config or to `.eslintrc`, a flag should be appended to the command found in `package.json`: `--no-cache` which will force jest to reload configuration. This only needs to happen once for the new configuration to be re-cached.
+
 ## JavaScript
 
 ### Transpilation
@@ -78,9 +90,3 @@ Rules superseding the base ruleset are defined in `.stylelintrc.`
 
 - Add responsive image generation
 - Templating for files (name, date etc)
-
-## Comprehend
-
-- Go back over images
-- What is NamedModulesPlugin
-- Free variables

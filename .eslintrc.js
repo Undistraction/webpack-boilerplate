@@ -7,7 +7,8 @@ module.exports = {
     "react"
   ],
   "env": {
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "parserOptions": {
     "sourceType": "module",
