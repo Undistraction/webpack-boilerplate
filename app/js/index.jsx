@@ -7,23 +7,28 @@ import { AppContainer } from 'react-hot-loader';
 import App from './components/App';
 import '../css/main.css';
 
-ReactDOM.render(
-  <AppContainer>
-    <App name={'REACT'} styleName={'App'} />
-  </AppContainer>,
- document.getElementById('app'));
+// Enable performance hints in development
+if (process.env.NODE_ENV !== 'production') {
+  React.Perf = require('react-addons-perf');
+}
 
+// Function to allow us to share app render with HMR setup.
+const renderApp = (AppComponent) => {
+  ReactDOM.render(
+    // App is wrapped inside AppContainer to enable HMR in development. AppContainer effectively
+    // becomes transparent in production.
+    <AppContainer>
+      <AppComponent name={'REACT'} />
+    </AppContainer>,
+   document.getElementById('app'));
+};
 
-// Needed for Hot Module Replacement
-// Hot Module Replacement API
+// Render application
+renderApp(App);
+
+ // Enable Hot Module Replacement API
 if (module.hot) {
   module.hot.accept('./components/App', () => {
-    const NextApp = require('./components/App').default;
-    ReactDOM.render(
-      <AppContainer>
-        <NextApp name={'REACT'} styleName={'App'} />
-      </AppContainer>,
-      document.getElementById('app')
-    );
+    renderApp(App);
   });
 }
