@@ -16,5 +16,5 @@ export default class Comp extends React.Component {
 }
 
 Comp.propTypes = {
-  name: React.PropTypes.string.isRequired
+  name: React.PropTypes.string.isRequired,
 };
