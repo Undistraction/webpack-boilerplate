@@ -20,22 +20,22 @@ const parts = require('./webpack.parts');
 // Paths used in configuration.
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'build')
+  build: path.join(__dirname, 'build'),
 };
 
 const PRODUCTION = 'production';
 const DEVELOPMENT = 'development';
 
 // Configuration shared by development and production.
-const common = merge(
+const common = merge([
   {
     // Starting point for compilation.
     entry: {
-      app: path.join(PATHS.app, 'js')
+      app: path.join(PATHS.app, 'js'),
     },
     output: {
       // path to the generated file(s).
-      path: PATHS.build
+      path: PATHS.build,
     },
     plugins: [
       // Easy generation of HTML index page.
@@ -44,20 +44,20 @@ const common = merge(
         title: 'Webpack Boilerplate',
         appMountId: 'app',
         mobile: true, // Scale page on mobile
-        inject: false // html-webpack-template requires this to work
-      })
+        inject: false, // html-webpack-template requires this to work
+      }),
     ],
     resolve: {
-      extensions: ['.js', '.jsx']
-    }
+      extensions: ['.js', '.jsx'],
+    },
   },
   // Lint any JavaScript files using ESLint.
   parts.lintJavaScript(PATHS.app),
   // Lint any styles using Stylelint.
   parts.lintCSS(PATHS.app),
   // Generate favicons
-  parts.generateFavicons()
-);
+  parts.generateFavicons(),
+]);
 
 module.exports = function (env) {
   // Expose our environment to Babel
@@ -71,18 +71,18 @@ module.exports = function (env) {
           // Path of compiled application file.
           // Add hash to filename to enable clientside caching.
           // The hash is based on the contents of the chunk.
-          filename: '[name].[chunkhash].js'
+          filename: '[name].[chunkhash].js',
         },
         plugins: [
           // Use hashes instead of numerical Ids for generated modules.
           new webpack.HashedModuleIdsPlugin(),
           // Display a progress bar during bundling
-          new ProgressBarPlugin()
+          new ProgressBarPlugin(),
         ],
         // Throw an error when performance issues are discovered during build.
         performance: {
-          hints: 'error'
-        }
+          hints: 'error',
+        },
       },
       // Remove all files from the `PATHS.build` directory before a new build.
       parts.clean(PATHS.build),
@@ -98,11 +98,11 @@ module.exports = function (env) {
         {
           name: 'vendor',
           // Add content to be cached
-          entries: ['react']
+          entries: ['react'],
         },
         {
-          name: 'manifest'
-        }
+          name: 'manifest',
+        },
       ]),
       // Generate sourcemaps for JavaScript code.
       // The `type` parameter governs the type of sourcemap generated. `source-map` is slow to
@@ -111,26 +111,26 @@ module.exports = function (env) {
       // Compile styles and output to a CSS file instead of rendering with JavaScript.
       parts.extractCSS({ outputPath: 'styles/[name].[contentHash].css' }),
       // // Remove unused CSS. Note this runs on the generated CSS.
-      parts.purifyCSS(PATHS.app)
+      parts.purifyCSS(PATHS.app),
     ]);
   }
   // Configuration for Development builds.
 
   if (env === DEVELOPMENT) {
-    return merge(
+    return merge([
       common,
       {
         output: {
           // Path of compiled application file.
-          filename: '[name].js'
+          filename: '[name].js',
         },
         performance: {
           // Disable performace hints in development as we aren't optimising compilation.
-          hints: false
+          hints: false,
         },
         plugins: [
-          new webpack.NamedModulesPlugin()
-        ]
+          new webpack.NamedModulesPlugin(),
+        ],
       },
       // Transpile JavaScript using Babel, using the default cache directory
       parts.loadJavaScript(PATHS.app, { cacheDirectory: true }),
@@ -146,8 +146,9 @@ module.exports = function (env) {
       parts.devServer({
         // Customise host/port
         host: process.env.HOST,
-        port: process.env.PORT
-      }));
+        port: process.env.PORT,
+      })],
+    );
   }
 
   throw new Error(`Environment ${env} not supported`);

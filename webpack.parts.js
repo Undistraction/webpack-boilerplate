@@ -35,7 +35,7 @@ exports.devServer = function (options) {
       // Defaults to `localhost`
       host: options.host,
       // Defaults to 8080
-      port: options.port
+      port: options.port,
     },
     plugins: [
       // TODO: Investigate this. What does it do? Is it supported now?
@@ -43,8 +43,8 @@ exports.devServer = function (options) {
       new webpack.HotModuleReplacementPlugin({
         // Disabled as this won't work with html-webpack-template yet
         // multiStep: true
-      })
-    ]
+      }),
+    ],
   };
 };
 
@@ -58,10 +58,10 @@ exports.lintJavaScript = function (paths) {
           include: paths,
           use: 'eslint-loader',
           // Run before other loaders that handle .js files
-          enforce: 'pre'
-        }
-      ]
-    }
+          enforce: 'pre',
+        },
+      ],
+    },
   };
 };
 
@@ -76,11 +76,11 @@ exports.loadJavaScript = function (paths, cacheDirectory = false) {
           loader: 'babel-loader',
           options: {
             // Enable caching for improved performance
-            cacheDirectory
-          }
-        }
-      ]
-    }
+            cacheDirectory,
+          },
+        },
+      ],
+    },
   };
 };
 
@@ -94,14 +94,14 @@ exports.minifyJavaScript = function ({ useSourceMap }) {
           // Show warnings related to code-shaking
           warnings: true,
           // Remove any calls to console
-          drop_console: true
+          drop_console: true,
         },
         // Don't beautify output
         beautify: false,
         // Remove any comments
-        comments: false
-      })
-    ]
+        comments: false,
+      }),
+    ],
   };
 };
 
@@ -109,7 +109,7 @@ exports.minifyJavaScript = function ({ useSourceMap }) {
 // @param type The type of sourcemap
 exports.generateSourcemaps = function ({ type }) {
   return {
-    devtool: type
+    devtool: type,
   };
 };
 
@@ -132,14 +132,14 @@ exports.lintCSS = function (paths) {
               return [
                 StyleLint({
                   // Ignore css files inside node modules
-                  ignoreFiles: 'node_modules/**/*.css'
-                })
+                  ignoreFiles: 'node_modules/**/*.css',
+                }),
               ];
-            }
-          }
-        }
-      ]
-    }
+            },
+          },
+        },
+      ],
+    },
   };
 };
 
@@ -155,25 +155,25 @@ exports.loadCSS = function (paths) {
           include: paths,
           use: [
             {
-              loader: 'style-loader'
+              loader: 'style-loader',
             },
             {
               loader: 'css-loader',
               options: {
                 modules: false,
-                sourceMap: true
-              }
+                sourceMap: true,
+              },
             },
             {
               loader: 'postcss-loader',
               options: {
-                sourceMap: 'inline'
-              }
-            }
-          ]
-        }
-      ]
-    }
+                sourceMap: 'inline',
+              },
+            },
+          ],
+        },
+      ],
+    },
   };
 };
 
@@ -197,20 +197,20 @@ exports.extractCSS = function ({ outputPath }) {
                   modules: true,
                   // Minimise output using cssnano.
                   // Note: An object can also be passed containing config options
-                  minimize: true
-                }
+                  minimize: true,
+                },
               },
               {
-                loader: 'postcss-loader'
-              }
-            ]
-          })
-        }
-      ]
+                loader: 'postcss-loader',
+              },
+            ],
+          }),
+        },
+      ],
     },
     plugins: [
-      new ExtractTextPlugin(outputPath)
-    ]
+      new ExtractTextPlugin(outputPath),
+    ],
   };
 };
 
@@ -229,9 +229,9 @@ exports.purifyCSS = function (paths) {
         paths: paths.map(path => `${path}/*`),
 
         // Only .js files are picked up by default.
-        resolveExtensions: ['.html', '.jsx']
-      })
-    ]
+        resolveExtensions: ['.html', '.jsx'],
+      }),
+    ],
   };
 };
 
@@ -245,11 +245,11 @@ exports.loadImages = function () {
           options: {
             // File-size limit (in bytes), upto which images will stored as a data-url.
             // Above this limit they will be loaded conventionally.
-            limit: 25000
-          }
-        }
-      ]
-    }
+            limit: 25000,
+          },
+        },
+      ],
+    },
   };
 };
 
@@ -261,13 +261,13 @@ exports.extractBundles = function () {
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         // Pass a function used to detect if the module should be added to the vendor chunk.
-        minChunks: moduleIsVendor
+        minChunks: moduleIsVendor,
       }),
       // Extract bundle containing the manifest
       new webpack.optimize.CommonsChunkPlugin({
-        name: 'manifest'
-      })
-    ]
+        name: 'manifest',
+      }),
+    ],
   };
 };
 
@@ -276,8 +276,8 @@ exports.extractBundles = function () {
 exports.clean = function (path) {
   return {
     plugins: [
-      new CleanWebpackPlugin([path])
-    ]
+      new CleanWebpackPlugin([path]),
+    ],
   };
 };
 
@@ -286,8 +286,8 @@ exports.generateFavicons = function () {
   return {
     plugins: [
       new FaviconsWebpackPlugin({
-        logo: './app/images/favicon/favicon_base.png'
-      })
-    ]
+        logo: './app/images/favicon/favicon_base.png',
+      }),
+    ],
   };
 };
