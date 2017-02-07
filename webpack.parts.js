@@ -7,6 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const STYLES_REGEX = /\.css$/;
 const JS_REGEX = /\.jsx?$/;
@@ -36,6 +37,8 @@ exports.devServer = function (options) {
       host: options.host,
       // Defaults to 8080
       port: options.port,
+      // Allow friendly-errors to take over error reporting
+      quiet: true,
     },
     plugins: [
       // TODO: Investigate this. What does it do? Is it supported now?
@@ -288,6 +291,14 @@ exports.generateFavicons = function () {
       new FaviconsWebpackPlugin({
         logo: './app/images/favicon/favicon_base.png',
       }),
+    ],
+  };
+};
+
+exports.prettyErrorReporting = function () {
+  return {
+    plugins: [
+      new FriendlyErrorsWebpackPlugin(),
     ],
   };
 };
