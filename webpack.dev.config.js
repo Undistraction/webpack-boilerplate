@@ -1,4 +1,5 @@
 const webpack = require(`webpack`)
+const HtmlWebpackPlugin = require(`html-webpack-plugin`)
 
 module.exports = {
   mode: `development`,
@@ -24,6 +25,10 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(), // Adds HMR
     new webpack.NamedModulesPlugin(), // Display module path in HMR updates
+    new HtmlWebpackPlugin({
+      title: `Webpack Boilerplate`,
+      template: `index.html`,
+    }), // Index template generation
   ],
   devServer: {
     contentBase: `./dist`, // Serve from dir
