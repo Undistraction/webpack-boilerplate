@@ -1,42 +1,4 @@
 {
-  "presets": [
-      // Add support for React / JSX
-      "react",
-    [
-      // Configure babel-preset-env, which dynamically applies plugins and polyfills based on chosen
-      // browser support.
-      "env",
-      {
-        "targets": {
-          "browsers": ["last 2 versions"]
-        },
-        // Just use ES6 imports as they are being bundled anyway and won't be imports anymore.
-        "modules": false
-      }
-    ]
-  ],
-  "plugins": [
-    "transform-object-rest-spread"
-  ],
-  "env": {
-    // Development-specific settings
-    "development": {
-      "plugins": [
-        // Enable React HMR
-        "react-hot-loader/babel"
-      ]
-    },
-    // Test-specific settings
-    "test": {
-      "presets": [
-        ["es2015", {
-          // Convert ES6 imports to commonjs imports for Jest
-          "modules": "commonjs"
-          }]
-        ],
-      plugins: [
-        "babel-plugin-transform-es2015-modules-commonjs"
-      ]
-    }
-  }
+  "plugins": ["transform-es2015-destructuring", "transform-object-rest-spread"],
+  "presets": ["env", "react"]
 }
