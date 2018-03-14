@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require(`html-webpack-plugin`)
 
 module.exports = {
   mode: `development`,
-  entry: [`react-hot-loader/patch`, `./src/index.js`],
+  entry: [`react-hot-loader/patch`, `./src/js/index.js`],
   module: {
     rules: [
       {
@@ -11,10 +11,13 @@ module.exports = {
         exclude: /node_modules/,
         use: [`babel-loader`],
       },
+      {
+        test: /\.css$/,
+        use: [{ loader: `style-loader` }, { loader: `css-loader` }],
+      },
     ],
   },
   resolve: {
-    //
     extensions: [`*`, `.js`, `.jsx`],
   },
   output: {
@@ -28,10 +31,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: `Webpack Boilerplate`,
       template: `index.html`,
-    }), // Index template generation
+    }), // HTML template generation
   ],
   devServer: {
-    contentBase: `./dist`, // Serve from dir
+    contentBase: `./dev`, // Serve from dir
     hot: true, // Enable HMR
   },
 }
