@@ -1,9 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Renderer from './renderer'
 
-const title = `Webpack Boilerplate`
-
-export default ReactDOM.render(
-  <div>{title}</div>,
-  document.getElementById(`app`)
-)
+export default ReactDOM.render(<Renderer />, document.getElementById(`app`))
