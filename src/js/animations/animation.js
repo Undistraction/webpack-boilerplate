@@ -1,20 +1,22 @@
 import { randomIntInRange } from 'animation-utils'
 import seedrandom from 'seedrandom'
 
-const randomIntInRangeSeeded = randomIntInRange(seedrandom(1))
-
 const midPointX = context => context.canvas.clientWidth * 0.5
 const midPointY = context => context.canvas.clientHeight * 0.5
 
-const testAnimation = (context, { gui, stats }) => {
+const animate = (context, { gui, stats }) => {
+  const randomIntInRangeSeeded = randomIntInRange(seedrandom(1))
+
   // ---------------------------------------------------------------------------
   // Cache fixed data
   // ---------------------------------------------------------------------------
   const canvasWidth = context.canvas.clientWidth
   const canvasHeight = context.canvas.clientHeight
-  console.log(canvasWidth)
   const canvasMidX = midPointX(context)
   const canvasMidY = midPointY(context)
+  const animationTracker = {
+    id: null,
+  }
   const toRGBString = a =>
     `rgb(${Math.round(a[0])}, ${Math.round(a[1])}, ${Math.round(a[2])})`
 
@@ -35,36 +37,48 @@ const testAnimation = (context, { gui, stats }) => {
   // ---------------------------------------------------------------------------
   // Configure GUI
   // ---------------------------------------------------------------------------
+
+  gui.destroy()
+
   // Shadow Blur
   gui
     .add(vars, `shadowBlur`)
     .min(0)
     .max(120)
 
-  // Shadow Colour
+  // Stroke Colour
   gui.addColor(vars, `strokeColor`)
-  // Allow save
-  gui.remember(vars)
 
+  // Allow save
+  // gui.remember(vars)
+
+  let centerSwitch = false
   // ---------------------------------------------------------------------------
   // Render
   // ---------------------------------------------------------------------------
-  const render = (startX, startY) => {
+  const loop = (startX, startY) => {
     stats.begin()
     context.shadowBlur = vars.shadowBlur
     const strokColorString = toRGBString(vars.strokeColor)
     context.shadowColor = strokColorString
     context.strokeStyle = strokColorString
-    const x = randomIntInRangeSeeded(0, canvasWidth)
-    const y = randomIntInRangeSeeded(0, canvasHeight)
+    const x = centerSwitch ? randomIntInRangeSeeded(0, canvasWidth) : canvasMidX
+    const y = centerSwitch
+      ? randomIntInRangeSeeded(0, canvasHeight)
+      : canvasMidY
     context.beginPath()
     context.moveTo(startX, startY)
     context.lineTo(x, y)
     context.stroke()
+    centerSwitch = !centerSwitch
     stats.end()
-    window.requestAnimationFrame(() => render(x, y))
+    animationTracker.id = window.requestAnimationFrame(() => loop(x, y))
   }
-  render(canvasMidX, canvasMidY)
+  loop()
+  return animationTracker
 }
 
-export default testAnimation
+export default {
+  title: `This Is The Title`,
+  animate,
+}

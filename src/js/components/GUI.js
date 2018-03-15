@@ -1,18 +1,28 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-class Renderer extends React.Component {
-  constructor({ gui }) {
-    super()
-    this.element = gui.domElement
+class GUI extends React.PureComponent {
+  updateGui(gui) {
+    this.setState({
+      gui,
+    })
+    this.wrapper.appendChild(gui.domElement)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.gui !== this.state.gui) {
+      this.state.gui.destroy()
+      this.wrapper.innerHTML = ``
+      this.updateGui(nextProps.gui)
+    }
   }
 
   componentDidMount() {
-    this.wrapper.appendChild(this.element)
+    if (this.props.gui) this.updateGui(this.props.gui)
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  shouldComponentUpdate() {
-    return false
+  componentWillUnmount() {
+    this.state.gui.destroy()
   }
 
   render() {
@@ -27,4 +37,8 @@ class Renderer extends React.Component {
   }
 }
 
-export default Renderer
+GUI.propTypes = {
+  gui: PropTypes.object,
+}
+
+export default GUI

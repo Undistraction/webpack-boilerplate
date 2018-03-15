@@ -29,8 +29,10 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.4",
     "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -42,6 +44,7 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.7.0",
+    "eslint-plugin-class-property": "^1.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-prettier": "^2.3.1",
@@ -64,6 +67,8 @@
   "dependencies": {
     "animation-utils": "0.1.0",
     "dat.gui": "^0.7.1",
+    "debounce": "^1.1.0",
+    "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.0",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.5.0",

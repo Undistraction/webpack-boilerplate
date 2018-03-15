@@ -1,18 +1,14 @@
 import React from 'react'
 
-class Renderer extends React.Component {
+class Renderer extends React.PureComponent {
   constructor({ stats }) {
     super()
     this.element = stats.dom
+    this.element.style.cssText = `cursor:pointer;opacity:0.9;z-index:10000`
   }
 
   componentDidMount() {
     this.wrapper.appendChild(this.element)
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  shouldComponentUpdate() {
-    return false
   }
 
   render() {
