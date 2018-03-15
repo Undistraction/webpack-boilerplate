@@ -55,6 +55,7 @@
     "react-hot-loader": "^4.0.0",
     "style-loader": "^0.20.3",
     "stylelint": "^9.1.2",
+    "stylelint-config-prettier": "^3.0.4",
     "stylelint-config-standard": "^18.2.0",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12",
@@ -63,11 +64,13 @@
   "dependencies": {
     "animation-utils": "0.1.0",
     "dat.gui": "^0.7.1",
+    "normalize.css": "^8.0.0",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.5.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "seedrandom": "^2.4.3",
+    "stats.js": "^0.17.0",
     "styled-components": "^3.2.2"
   },
   "husky": {

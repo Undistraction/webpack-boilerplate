@@ -1,3 +1,14 @@
+@import '~normalize.css';
+
+html {
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 html,
 body {
   width: 100%;
@@ -6,8 +17,41 @@ body {
   background: #111;
 }
 
-#gui {
+#Renderer {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+}
+
+#Canvas {
+  padding: 20px;
+}
+
+#GUI {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+#Instruments {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#Title {
+  padding: 10px 0;
+  margin: 0;
+  color: #eee;
+  text-align: center;
+  font-weight: normal;
+  font-size: 14px;
+  font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
+    'Lucida Typewriter', monospace;
+}
+
+/* GUI close button */
+
+.close-button {
+  display: none;
 }

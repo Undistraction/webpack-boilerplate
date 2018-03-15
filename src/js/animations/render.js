@@ -6,12 +6,13 @@ const randomIntInRangeSeeded = randomIntInRange(seedrandom(1))
 const midPointX = context => context.canvas.clientWidth * 0.5
 const midPointY = context => context.canvas.clientHeight * 0.5
 
-const testAnimation = (context, gui) => {
+const testAnimation = (context, { gui, stats }) => {
   // ---------------------------------------------------------------------------
   // Cache fixed data
   // ---------------------------------------------------------------------------
   const canvasWidth = context.canvas.clientWidth
   const canvasHeight = context.canvas.clientHeight
+  console.log(canvasWidth)
   const canvasMidX = midPointX(context)
   const canvasMidY = midPointY(context)
   const toRGBString = a =>
@@ -34,7 +35,6 @@ const testAnimation = (context, gui) => {
   // ---------------------------------------------------------------------------
   // Configure GUI
   // ---------------------------------------------------------------------------
-
   // Shadow Blur
   gui
     .add(vars, `shadowBlur`)
@@ -46,18 +46,22 @@ const testAnimation = (context, gui) => {
   // Allow save
   gui.remember(vars)
 
+  // ---------------------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------------------
   const render = (startX, startY) => {
+    stats.begin()
     context.shadowBlur = vars.shadowBlur
     const strokColorString = toRGBString(vars.strokeColor)
     context.shadowColor = strokColorString
     context.strokeStyle = strokColorString
-    console.log(strokColorString)
     const x = randomIntInRangeSeeded(0, canvasWidth)
     const y = randomIntInRangeSeeded(0, canvasHeight)
     context.beginPath()
     context.moveTo(startX, startY)
     context.lineTo(x, y)
     context.stroke()
+    stats.end()
     window.requestAnimationFrame(() => render(x, y))
   }
   render(canvasMidX, canvasMidY)

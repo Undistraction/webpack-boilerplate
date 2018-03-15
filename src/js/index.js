@@ -1,6 +1,6 @@
-import app from './app'
+import App from './components/App'
 import '../css/app.css'
 
 if (module.hot) {
-  module.hot.accept(`./app.js`, () => app())
+  module.hot.accept(`./components/App.js`, () => App())
 }
