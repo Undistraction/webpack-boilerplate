@@ -5,3 +5,9 @@ body {
   overflow: hidden;
   background: #111;
 }
+
+#gui {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

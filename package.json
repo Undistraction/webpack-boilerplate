@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "animation-utils": "0.1.0",
+    "dat.gui": "^0.7.1",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.5.0",
     "react": "^16.2.0",
