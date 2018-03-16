@@ -37,6 +37,14 @@ body {
   background: #111;
 }
 
+.HeaderButton {
+  padding: 11px 12px 9px;
+}
+
+.HeaderButton + .HeaderButton {
+  border-left: 1px solid #222;
+}
+
 #root {
   height: 100%;
 }
@@ -91,22 +99,20 @@ body {
 
 #Title {
   font-weight: normal;
-  padding: 10px 0;
+  padding: 12px 0;
   text-align: center;
-  margin: 0 100px;
+  margin: 0 150px;
   font-size: 14px;
 }
 
 #HideShowButton {
   position: absolute;
-  top: 8px;
+  top: 2px;
   left: 6px;
 }
 
 #Controls {
-  margin-top: 10px;
   float: right;
-  margin-right: 6px;
   display: flex;
   flex-direction: row;
 }

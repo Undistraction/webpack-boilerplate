@@ -19,12 +19,9 @@ const configureGUI = (gui, state) => {
 }
 
 const start = (canvas, gui) => {
-  console.log(`Start`, canvas, gui)
   const state = {
     shadowBlur: 4,
     strokeColor: [220, 220, 220, 0.1],
-    originX: undefined,
-    originY: undefined,
   }
 
   const randomIntInRangeSeeded = randomIntInRange(seedrandom(1))
@@ -69,7 +66,7 @@ const start = (canvas, gui) => {
     mouseListener.destroy()
   }
 
-  context.fillStyle = rgbArrayToString([250, 17, 17])
+  context.fillStyle = rgbArrayToString([17, 17, 17])
   context.fillRect(
     0,
     0,
@@ -101,6 +98,7 @@ const start = (canvas, gui) => {
 }
 
 export default {
-  title: `This Is The Title`,
+  title: `Basic Canvas Animation`,
   start,
+  instructions: `Click`,
 }

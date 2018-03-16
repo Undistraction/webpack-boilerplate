@@ -25,8 +25,12 @@ class HideShowButton extends React.PureComponent {
 
   render() {
     return (
-      <button id="HideShowButton" onClick={this.handleClick}>
-        {this.state.isHidden ? `Show [h]` : `Hide [h]`}
+      <button
+        className="HeaderButton"
+        id="HideShowButton"
+        onClick={this.handleClick}
+      >
+        {this.state.isHidden ? `Show` : `Hide`}
       </button>
     )
   }

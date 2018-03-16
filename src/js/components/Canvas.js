@@ -1,12 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { canvasContentDimensions } from 'animation-utils'
+import windowResizeListener from '../utils/windowResizeListener'
+
+const scaledCanvasDimensions = () =>
+  canvasContentDimensions(window.innerWidth - 40, window.innerHeight - 80)
 
 class Canvas extends React.PureComponent {
   constructor() {
     super()
+    const scaledDimensions = scaledCanvasDimensions()
     this.state = {
-      width: 0,
-      height: 0,
+      width: scaledDimensions.width,
+      height: scaledDimensions.height,
     }
   }
 
@@ -17,6 +23,12 @@ class Canvas extends React.PureComponent {
     this.canvas
       .getContext(`2d`)
       .clearRect(0, 0, this.state.width, this.state.height)
+
+    const scaledDimensions = scaledCanvasDimensions()
+    this.setState({
+      width: scaledDimensions.width,
+      height: scaledDimensions.height,
+    })
   }
 
   getCanvas = () => this.canvas
@@ -24,16 +36,13 @@ class Canvas extends React.PureComponent {
   // ---------------------------------------------------------------------------
   // Lifecycle
   // ---------------------------------------------------------------------------
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.width !== this.state.width ||
-      nextProps.height !== this.state.height
-    ) {
-      this.setState({
-        width: nextProps.width,
-        height: nextProps.height,
-      })
-    }
+
+  componentDidMount() {
+    this.windowResizeListener = windowResizeListener(this.clear)
+  }
+
+  componentWillUnmount() {
+    this.windowResizeListener.destroy()
   }
 
   render() {
