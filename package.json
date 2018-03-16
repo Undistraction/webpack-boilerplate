@@ -65,9 +65,8 @@
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
-    "animation-utils": "0.1.0",
+    "animation-utils": "^0.3.0",
     "dat.gui": "^0.7.1",
-    "debounce": "^1.1.0",
     "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.0",
     "ramda": "^0.25.0",

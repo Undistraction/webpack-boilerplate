@@ -37,14 +37,38 @@ body {
   background: #111;
 }
 
-#Renderer {
+#root {
+  height: 100%;
+}
+
+#App {
   display: flex;
-  flex: 0 1 auto;
   flex-direction: column;
+  height: 100%;
 }
 
 #Canvas {
-  padding: 20px;
+  flex: 1 0 auto;
+  position: relative;
+}
+
+#Canvas-inner {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+}
+
+#Canvas canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#Header {
+  background: black;
+  flex: 0 0 auto;
 }
 
 #GUI {
@@ -65,11 +89,8 @@ body {
   bottom: 20px;
 }
 
-#Header {
-  background: black;
-}
-
 #Title {
+  font-weight: normal;
   padding: 10px 0;
   text-align: center;
   margin: 0 100px;
@@ -82,10 +103,12 @@ body {
   left: 6px;
 }
 
-#ResetButton {
-  margin-top: 12px;
+#Controls {
+  margin-top: 10px;
   float: right;
   margin-right: 6px;
+  display: flex;
+  flex-direction: row;
 }
 
 /* GUI  */
