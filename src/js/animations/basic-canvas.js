@@ -1,6 +1,7 @@
 import {
   canvasScaleValue,
   randomIntInRange,
+  rgbArrayToString,
   rgbaArrayToString,
 } from 'animation-utils'
 import seedrandom from 'seedrandom'
@@ -19,6 +20,7 @@ const configureGUI = (gui, state) => {
 }
 
 const start = (canvas, gui, stats) => {
+  console.log(`Start`, canvas)
   const state = {
     shadowBlur: 4,
     strokeColor: [220, 220, 220, 0.1],
@@ -55,15 +57,26 @@ const start = (canvas, gui, stats) => {
   // ---------------------------------------------------------------------------
   // Configure GUI
   // ---------------------------------------------------------------------------
-
   configureGUI(gui, state)
 
   // Allow save
   // gui.remember(state)
 
+  // ---------------------------------------------------------------------------
+  // Prep Canvas
+  // ---------------------------------------------------------------------------
+
   const destroy = () => {
     mouseListener.destroy()
   }
+
+  context.fillStyle = rgbArrayToString([250, 17, 17])
+  context.fillRect(
+    0,
+    0,
+    canvasScaleValue(canvas.clientWidth),
+    canvasScaleValue(canvas.clientHeight)
+  )
 
   const callback = () => {
     if (state.originX === undefined) return

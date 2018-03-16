@@ -1,7 +1,6 @@
 import React from 'react'
 import Stats from 'stats.js'
 import { canvasContentDimensions } from 'animation-utils'
-import debounce from 'lodash.debounce'
 import dat from 'dat.gui'
 import animation from '../animations/basic-canvas'
 import GUI from './GUI'
@@ -9,6 +8,8 @@ import Canvas from './Canvas'
 import Instruments from './Instruments'
 import HideShowButton from './HideShowButton'
 import keyUpListener from '../utils/keyUpListener'
+import windowResizeListener from '../utils/windowResizeListener'
+import animator from '../animations/animator'
 
 // ---------------------------------------------------------------------------
 // Temp
@@ -21,7 +22,7 @@ class Renderer extends React.PureComponent {
   constructor() {
     super()
     this.stats = new Stats()
-    this.stats.showPanel(0)
+    this.animator = animator(animation)
     const scaledDimensions = scaledCanvasDimensions()
     this.state = {
       isHidden: false,
@@ -36,7 +37,7 @@ class Renderer extends React.PureComponent {
   // ---------------------------------------------------------------------------
 
   resetAnimation = () => {
-    this.stopAnimation()
+    this.animator.stop()
     this.canvas.clear()
 
     const scaledDimensions = scaledCanvasDimensions()
@@ -49,16 +50,10 @@ class Renderer extends React.PureComponent {
 
   startAnimation = () => {
     const gui = new dat.GUI({ autoPlace: false })
-    const animationData = animation.start(this.canvasElement, gui, this.stats)
+    this.animator.start(this.canvasElement, gui, this.stats)
     this.setState({
-      animationData,
       gui,
     })
-  }
-
-  stopAnimation = () => {
-    window.cancelAnimationFrame(this.state.animationData.id)
-    this.state.animationData.destroy()
   }
 
   // ---------------------------------------------------------------------------
@@ -72,19 +67,16 @@ class Renderer extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    this.stopAnimation()
+    this.animator.stop()
     this.keyUpListener.destroy()
   }
 
   addListeners = () => {
-    window.addEventListener(
-      `resize`,
-      debounce(this.resetAnimation, 100, { leading: true })
-    )
+    this.windowResizeListener = windowResizeListener(this.resetAnimation)
     this.keyUpListener = keyUpListener({
       r: () => this.resetAnimation(),
       h: () => this.toggleUI(!this.state.isHidden),
-      s: () => this.stopAnimation(),
+      s: () => this.animator.stop(),
     })
   }
 
@@ -107,7 +99,7 @@ class Renderer extends React.PureComponent {
         />
         <header id="Header" className={this.state.isHidden ? `isHidden` : ``}>
           <div id="Controls">
-            <button id="StopButton" onClick={this.stopAnimation}>
+            <button id="StopButton" onClick={this.animator.stopAnimation}>
               Stop [s]
             </button>
             <button id="ResetButton" onClick={this.resetAnimation}>
