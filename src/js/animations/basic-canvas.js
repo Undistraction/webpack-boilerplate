@@ -1,17 +1,21 @@
-import { randomIntInRange, rgbaArrayToString } from 'animation-utils'
+import {
+  canvasScaleValue,
+  randomIntInRange,
+  rgbaArrayToString,
+} from 'animation-utils'
 import seedrandom from 'seedrandom'
 import loop from '../utils/loop'
+import mouseUpListener from '../utils/mouseUpListener'
 
-const devicePixelRatio = () => window.devicePixelRatio || 1
+const configureGUI = (gui, state) => {
+  // Shadow Blur
+  gui
+    .add(state, `shadowBlur`)
+    .min(0)
+    .max(120)
 
-const scaleValueToCanvas = v => v * devicePixelRatio()
-
-const mouseCoordinatesInCanvas = (canvas, coordinates) => {
-  const rect = canvas.getBoundingClientRect()
-  return {
-    x: scaleValueToCanvas(coordinates.x - rect.left),
-    y: scaleValueToCanvas(coordinates.y - rect.top),
-  }
+  // Stroke Colour
+  gui.addColor(state, `strokeColor`)
 }
 
 const start = (canvas, gui, stats) => {
@@ -28,21 +32,18 @@ const start = (canvas, gui, stats) => {
   // Listeners
   // ---------------------------------------------------------------------------
 
-  canvas.addEventListener(`mouseup`, e => {
-    const coordinates = mouseCoordinatesInCanvas(canvas, {
-      x: e.clientX,
-      y: e.clientY,
-    })
-
+  const updateOrigin = coordinates => {
     state.originX = coordinates.x
     state.originY = coordinates.y
-  })
+  }
+
+  const mouseListener = mouseUpListener(canvas, updateOrigin)
 
   // ---------------------------------------------------------------------------
   // Cache fixed data
   // ---------------------------------------------------------------------------
-  const canvasWidth = scaleValueToCanvas(canvas.clientWidth)
-  const canvasHeight = scaleValueToCanvas(canvas.clientHeight)
+  const canvasWidth = canvasScaleValue(canvas.clientWidth)
+  const canvasHeight = canvasScaleValue(canvas.clientHeight)
 
   // ---------------------------------------------------------------------------
   // Defined fixed state
@@ -55,22 +56,16 @@ const start = (canvas, gui, stats) => {
   // Configure GUI
   // ---------------------------------------------------------------------------
 
-  // Shadow Blur
-  gui
-    .add(state, `shadowBlur`)
-    .min(0)
-    .max(120)
-
-  // Stroke Colour
-  gui.addColor(state, `strokeColor`)
+  configureGUI(gui, state)
 
   // Allow save
   // gui.remember(state)
 
-  // ---------------------------------------------------------------------------
-  // Render
-  // ---------------------------------------------------------------------------
-  return () => {
+  const destroy = () => {
+    mouseListener.destroy()
+  }
+
+  const callback = () => {
     if (state.originX === undefined) return
 
     const x = randomIntInRangeSeeded(0, canvasWidth)
@@ -87,6 +82,11 @@ const start = (canvas, gui, stats) => {
     context.lineTo(x, y)
     context.stroke()
     stats.end()
+  }
+
+  return {
+    destroy,
+    callback,
   }
 }
 

@@ -1,25 +1,18 @@
 import React from 'react'
 import Stats from 'stats.js'
+import { canvasContentDimensions } from 'animation-utils'
 import debounce from 'lodash.debounce'
 import dat from 'dat.gui'
 import animation from '../animations/basic-canvas'
 import GUI from './GUI'
+import Canvas from './Canvas'
 import Instruments from './Instruments'
 import HideShowButton from './HideShowButton'
+import keyUpListener from '../utils/keyUpListener'
 
 // ---------------------------------------------------------------------------
 // Temp
 // ---------------------------------------------------------------------------
-
-const devicePixelRatio = () => window.devicePixelRatio || 1
-
-const canvasContentDimensions = (width, height) => {
-  const ratio = devicePixelRatio()
-  return {
-    width: width * ratio,
-    height: height * ratio,
-  }
-}
 
 const scaledCanvasDimensions = () =>
   canvasContentDimensions(window.innerWidth - 40, window.innerHeight - 80)
@@ -44,40 +37,28 @@ class Renderer extends React.PureComponent {
 
   resetAnimation = () => {
     this.stopAnimation()
-    this.clearAnimation()
+    this.canvas.clear()
 
     const scaledDimensions = scaledCanvasDimensions()
     this.setState({
-      canvasWidth: scaledDimensions.x,
-      canvasHeight: scaledDimensions.y,
+      canvasWidth: scaledDimensions.width,
+      canvasHeight: scaledDimensions.height,
     })
     this.startAnimation()
   }
 
   startAnimation = () => {
-    // -------------------------------------------------------------------------
-    // Canvas Setup
-    // -------------------------------------------------------------------------
     const gui = new dat.GUI({ autoPlace: false })
-    const animationTracker = animation.start(this.canvas, gui, this.stats)
+    const animationData = animation.start(this.canvasElement, gui, this.stats)
     this.setState({
-      animationTracker,
+      animationData,
       gui,
     })
-
-    // -------------------------------------------------------------------------
-    // Listen For Window Resize
-    // -------------------------------------------------------------------------
   }
 
   stopAnimation = () => {
-    window.cancelAnimationFrame(this.state.animationTracker.id)
-  }
-
-  clearAnimation = () => {
-    this.canvas
-      .getContext(`2d`)
-      .clearRect(0, 0, this.canvas.width, this.canvas.height)
+    window.cancelAnimationFrame(this.state.animationData.id)
+    this.state.animationData.destroy()
   }
 
   // ---------------------------------------------------------------------------
@@ -85,16 +66,26 @@ class Renderer extends React.PureComponent {
   // ---------------------------------------------------------------------------
 
   componentDidMount() {
-    window.addEventListener(
-      `resize`,
-      debounce(this.resetAnimation, 100, { leading: true })
-    )
-    document.body.addEventListener(`keyup`, this.handleKeyUp, true)
+    this.canvasElement = this.canvas.getCanvas()
     this.startAnimation()
+    this.addListeners()
   }
 
   componentWillUnmount() {
     this.stopAnimation()
+    this.keyUpListener.destroy()
+  }
+
+  addListeners = () => {
+    window.addEventListener(
+      `resize`,
+      debounce(this.resetAnimation, 100, { leading: true })
+    )
+    this.keyUpListener = keyUpListener({
+      r: () => this.resetAnimation(),
+      h: () => this.toggleUI(!this.state.isHidden),
+      s: () => this.stopAnimation(),
+    })
   }
 
   // ---------------------------------------------------------------------------
@@ -105,23 +96,6 @@ class Renderer extends React.PureComponent {
     this.setState({
       isHidden,
     })
-  }
-
-  handleKeyUp = event => {
-    event.stopPropagation()
-    switch (event.key) {
-      case `r`:
-        this.resetAnimation()
-        break
-      case `h`:
-        this.toggleUI(!this.state.isHidden)
-        break
-      case `s`:
-        this.stopAnimation()
-        break
-      default:
-        break
-    }
   }
 
   render() {
@@ -144,9 +118,9 @@ class Renderer extends React.PureComponent {
         </header>
         <div id="Canvas">
           <div id="Canvas-inner">
-            <canvas
-              ref={e => {
-                this.canvas = e
+            <Canvas
+              ref={el => {
+                this.canvas = el
               }}
               width={this.state.canvasWidth}
               height={this.state.canvasHeight}

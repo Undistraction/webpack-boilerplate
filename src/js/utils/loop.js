@@ -1,12 +1,14 @@
 export default f => (...args) => {
-  const animationTracker = {}
+  const animationData = {}
 
-  const callback = f(...args)
+  const { callback, destroy } = f(...args)
+
+  animationData.destroy = destroy
 
   const loop = () => {
     callback()
-    animationTracker.id = window.requestAnimationFrame(() => loop())
-    return animationTracker
+    animationData.id = window.requestAnimationFrame(() => loop())
+    return animationData
   }
   return loop()
 }
