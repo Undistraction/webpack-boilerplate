@@ -1,14 +1,17 @@
-export default f => (...args) => {
+export default (stats, f) => (...args) => {
   const animationData = {}
 
   const { callback, destroy } = f(...args)
 
-  animationData.destroy = destroy
-
   const loop = () => {
+    stats.begin()
     callback()
+    stats.end()
     animationData.id = window.requestAnimationFrame(() => loop())
-    return animationData
+    return () => {
+      destroy()
+      window.cancelAnimationFrame(animationData.id)
+    }
   }
   return loop()
 }

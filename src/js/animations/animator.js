@@ -1,20 +1,18 @@
-export default animation => {
+import loop from '../utils/loop'
+
+export default (stats, animation) => {
   const state = {}
 
   const start = (...args) => {
-    state.animationData = animation.start(...args)
+    state.destroy = loop(stats, animation)(...args)
   }
 
   const stop = () => {
-    window.cancelAnimationFrame(state.animationData.id)
-    state.animationData.destroy()
+    state.destroy()
   }
-
-  const reset = () => {}
 
   return {
     start,
     stop,
-    reset,
   }
 }

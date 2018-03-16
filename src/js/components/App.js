@@ -22,7 +22,7 @@ class Renderer extends React.PureComponent {
   constructor() {
     super()
     this.stats = new Stats()
-    this.animator = animator(animation)
+    this.animator = animator(this.stats, animation.start)
     const scaledDimensions = scaledCanvasDimensions()
     this.state = {
       isHidden: false,

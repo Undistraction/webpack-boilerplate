@@ -5,7 +5,6 @@ import {
   rgbaArrayToString,
 } from 'animation-utils'
 import seedrandom from 'seedrandom'
-import loop from '../utils/loop'
 import mouseUpListener from '../utils/mouseUpListener'
 
 const configureGUI = (gui, state) => {
@@ -19,8 +18,8 @@ const configureGUI = (gui, state) => {
   gui.addColor(state, `strokeColor`)
 }
 
-const start = (canvas, gui, stats) => {
-  console.log(`Start`, canvas)
+const start = (canvas, gui) => {
+  console.log(`Start`, canvas, gui)
   const state = {
     shadowBlur: 4,
     strokeColor: [220, 220, 220, 0.1],
@@ -89,12 +88,10 @@ const start = (canvas, gui, stats) => {
     context.shadowColor = strokColorString
     context.strokeStyle = strokColorString
 
-    stats.begin()
     context.beginPath()
     context.moveTo(state.originX, state.originY)
     context.lineTo(x, y)
     context.stroke()
-    stats.end()
   }
 
   return {
@@ -105,5 +102,5 @@ const start = (canvas, gui, stats) => {
 
 export default {
   title: `This Is The Title`,
-  start: loop(start),
+  start,
 }
