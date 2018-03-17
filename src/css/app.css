@@ -1,5 +1,19 @@
 @import '~normalize.css';
 
+/* -----------------------------------------------------------------------------
+ * Box-sizing Reset  
+ * -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* -----------------------------------------------------------------------------
+ * Generic  
+ * -------------------------------------------------------------------------- */
+
 html {
   box-sizing: border-box;
   font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
@@ -9,18 +23,8 @@ html {
   font-size: 14px;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
 :focus {
   outline: none;
-}
-
-.isHidden {
-  visibility: hidden;
 }
 
 button {
@@ -37,13 +41,17 @@ body {
   background: #111;
 }
 
-.HeaderButton {
-  padding: 11px 12px 9px;
+/* -----------------------------------------------------------------------------
+ * Utility  
+ * -------------------------------------------------------------------------- */
+
+.isHidden {
+  visibility: hidden;
 }
 
-.HeaderButton + .HeaderButton {
-  border-left: 1px solid #222;
-}
+/* -----------------------------------------------------------------------------
+ * Components  
+ * -------------------------------------------------------------------------- */
 
 #root {
   height: 100%;
@@ -55,12 +63,20 @@ body {
   height: 100%;
 }
 
-#Canvas {
+.HeaderButton {
+  padding: 11px 12px 9px;
+}
+
+.HeaderButton + .HeaderButton {
+  border-left: 1px solid #222;
+}
+
+.Canvas {
   flex: 1 0 auto;
   position: relative;
 }
 
-#Canvas-inner {
+.Canvas-inner {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -68,18 +84,18 @@ body {
   left: 20px;
 }
 
-#Canvas canvas {
+.Canvas canvas {
   width: 100%;
   height: 100%;
   position: absolute;
 }
 
-#Header {
+.App-Header {
   background: black;
   flex: 0 0 auto;
 }
 
-#GUI {
+.GUI {
   position: absolute;
   border-left: 5px;
   border-right: 5px;
@@ -91,13 +107,13 @@ body {
   right: 0;
 }
 
-#Instruments {
+.Instruments {
   position: absolute;
   right: 20px;
   bottom: 20px;
 }
 
-#Title {
+.Title {
   font-weight: normal;
   padding: 12px 0;
   text-align: center;
@@ -105,19 +121,21 @@ body {
   font-size: 14px;
 }
 
-#HideShowButton {
+.HideShowButton {
   position: absolute;
   top: 2px;
   left: 6px;
 }
 
-#Controls {
+.Controls {
   float: right;
   display: flex;
   flex-direction: row;
 }
 
-/* GUI  */
+/* -----------------------------------------------------------------------------
+ * Overrrides  
+ * -------------------------------------------------------------------------- */
 
 .close-button {
   display: none;

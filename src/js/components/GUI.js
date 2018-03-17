@@ -28,7 +28,7 @@ class GUI extends React.PureComponent {
   render() {
     return (
       <div
-        id="GUI"
+        className="GUI"
         ref={e => {
           this.wrapper = e
         }}

@@ -94,34 +94,33 @@ class Renderer extends React.PureComponent {
           onChange={this.toggleUI}
           isHidden={this.state.isHidden}
         />
-        <header id="Header" className={this.state.isHidden ? `isHidden` : ``}>
-          <div id="Controls">
+        <header
+          className={this.state.isHidden ? `App-Header isHidden` : `App-Header`}
+        >
+          <div className="Controls">
             <button
-              id="StopButton"
+              className="HeaderButton StopButton"
               onClick={this.stopAnimation}
-              className="HeaderButton"
             >
               Stop
             </button>
             <button
-              id="ResetButton"
+              className="HeaderButton ResetButton"
               onClick={this.resetAnimation}
-              className="HeaderButton"
             >
               Reset
             </button>
             <button
-              id="DownloadButton"
+              className="HeaderButton DownloadButton"
               onClick={this.download}
-              className="HeaderButton"
             >
               Download
             </button>
           </div>
-          <h1 id="Title">{this.state.title}</h1>
+          <h1 className="Title">{this.state.title}</h1>
         </header>
-        <div id="Canvas">
-          <div id="Canvas-inner">
+        <div className="Canvas">
+          <div className="Canvas-inner">
             <Canvas
               ref={el => {
                 this.canvas = el

@@ -15,7 +15,7 @@ class Renderer extends React.PureComponent {
   render() {
     return (
       <div
-        id="Instruments"
+        className="Instruments"
         ref={e => {
           this.wrapper = e
         }}
