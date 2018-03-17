@@ -20,6 +20,7 @@ class Canvas extends React.PureComponent {
   // API
   // ---------------------------------------------------------------------------
   clear = () => {
+    console.log(`Clear`, this.state.width, this.state.height)
     this.canvas
       .getContext(`2d`)
       .clearRect(0, 0, this.state.width, this.state.height)

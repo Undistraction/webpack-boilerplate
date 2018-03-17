@@ -1,6 +1,7 @@
 import React from 'react'
 import Stats from 'stats.js'
 import dat from 'dat.gui'
+import { canvasToDownload } from 'animation-utils'
 import animation from '../animations/basic-canvas'
 import GUI from './GUI'
 import Canvas from './Canvas'
@@ -9,7 +10,6 @@ import HideShowButton from './HideShowButton'
 import keyUpListener from '../utils/keyUpListener'
 import windowResizeListener from '../utils/windowResizeListener'
 import animator from '../animations/animator'
-import canvasToDownload from '../utils/canvasToDownload'
 
 // ---------------------------------------------------------------------------
 // Temp
@@ -35,6 +35,8 @@ class Renderer extends React.PureComponent {
     this.canvas.clear()
     this.startAnimation()
   }
+
+  stopAnimation = () => this.animator.stop()
 
   startAnimation = () => {
     const gui = new dat.GUI({ autoPlace: false })
@@ -96,7 +98,7 @@ class Renderer extends React.PureComponent {
           <div id="Controls">
             <button
               id="StopButton"
-              onClick={this.animator.stopAnimation}
+              onClick={this.stopAnimation}
               className="HeaderButton"
             >
               Stop
