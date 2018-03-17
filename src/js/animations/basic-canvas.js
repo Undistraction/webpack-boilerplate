@@ -12,6 +12,7 @@ import seedrandom from 'seedrandom'
 import mouseUpListener from '../utils/mouseUpListener'
 import drawPoints from '../utils/drawPoints'
 import kite from '../shapes/kite'
+import { ANIMATION_TYPES } from '../const'
 
 const TYPE_LINE = `line`
 const TYPE_KITE = `kite`
@@ -152,6 +153,7 @@ const start = (canvas, gui) => {
 
 export default {
   title: `Basic Canvas Animation`,
+  type: ANIMATION_TYPES.BASIC_CANVAS,
   start,
   instructions: `Click`,
 }

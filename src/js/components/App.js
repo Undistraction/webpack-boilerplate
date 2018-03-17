@@ -10,6 +10,7 @@ import HideShowButton from './HideShowButton'
 import keyUpListener from '../utils/keyUpListener'
 import windowResizeListener from '../utils/windowResizeListener'
 import animator from '../animations/animator'
+import { ANIMATION_TYPES } from '../const'
 
 // ---------------------------------------------------------------------------
 // Temp
@@ -23,6 +24,7 @@ class Renderer extends React.PureComponent {
     this.state = {
       isHidden: false,
       title: animation.title,
+      animationType: animation.type,
     }
   }
 
@@ -40,7 +42,15 @@ class Renderer extends React.PureComponent {
 
   startAnimation = () => {
     const gui = new dat.GUI({ autoPlace: false })
-    this.animator.start(this.canvasElement, gui)
+
+    const paramMap = {
+      [ANIMATION_TYPES.BASIC_CANVAS]: this.canvasElement,
+      [ANIMATION_TYPES.BASIC_SVG]: `.SVG`,
+    }
+
+    const param = paramMap[this.state.animationType]
+
+    this.animator.start(param, gui)
     this.setState({
       gui,
     })
@@ -121,11 +131,16 @@ class Renderer extends React.PureComponent {
         </header>
         <div className="Canvas">
           <div className="Canvas-inner">
-            <Canvas
-              ref={el => {
-                this.canvas = el
-              }}
-            />
+            {this.state.animationType === ANIMATION_TYPES.BASIC_CANVAS && (
+              <Canvas
+                ref={el => {
+                  this.canvas = el
+                }}
+              />
+            )}
+            {this.state.animationType === ANIMATION_TYPES.BASIC_SVG && (
+              <div className="SVG" />
+            )}
           </div>
         </div>
         {!this.state.isHidden && (
