@@ -20,7 +20,7 @@ const TYPES = [TYPE_LINE, TYPE_KITE]
 
 const configureGUI = (gui, state) => {
   gui
-    .add(state, `shadowBlur`)
+    .add(state, `shadowBlurAmount`)
     .min(0)
     .max(120)
 
@@ -36,7 +36,7 @@ const configureGUI = (gui, state) => {
 
 const start = (canvas, gui) => {
   const state = {
-    shadowBlur: 4,
+    shadowBlurAmount: 4,
     strokeColor: [220, 220, 220, 0.1],
     maxHeight: 5000,
     type: TYPE_LINE,
@@ -70,9 +70,9 @@ const start = (canvas, gui) => {
   // ---------------------------------------------------------------------------
   // Defined fixed state
   // ---------------------------------------------------------------------------
-  const context = canvas.getContext(`2d`)
-  context.lineJoin = `round`
-  context.lineCap = `round`
+  const ctx = canvas.getContext(`2d`)
+  ctx.lineJoin = `round`
+  ctx.lineCap = `round`
 
   // ---------------------------------------------------------------------------
   // Configure GUI
@@ -94,9 +94,9 @@ const start = (canvas, gui) => {
 
   const renderLine = (fromPoint, toPoint) => {
     const strokeColorString = rgbaArrayToString(state.strokeColor)
-    context.shadowBlur = state.shadowBlur
-    context.shadowColor = strokeColorString
-    context.strokeStyle = strokeColorString
+    ctx.shadowBlurAmount = state.shadowBlurAmount
+    ctx.shadowColor = strokeColorString
+    ctx.strokeStyle = strokeColorString
 
     const distance = distanceBetweenPoints(fromPoint, toPoint)
     const lineLength = state.maxHeight >= distance ? distance : state.maxHeight
@@ -104,32 +104,32 @@ const start = (canvas, gui) => {
     const toX = Math.cos(angle) * lineLength
     const toY = Math.sin(angle) * lineLength
 
-    context.save()
-    context.translate(fromPoint.x, fromPoint.y)
-    drawPoints(context, [point(0, 0), point(toX, toY)])
-    context.restore()
+    ctx.save()
+    ctx.translate(fromPoint.x, fromPoint.y)
+    drawPoints(ctx, [point(0, 0), point(toX, toY)])
+    ctx.restore()
   }
 
   const renderKite = (fromPoint, toPoint) => {
     const strokeColorString = rgbaArrayToString(state.strokeColor)
-    context.shadowBlur = state.shadowBlur
-    context.shadowColor = strokeColorString
-    context.strokeStyle = strokeColorString
+    ctx.shadowBlurAmount = state.shadowBlurAmount
+    ctx.shadowColor = strokeColorString
+    ctx.strokeStyle = strokeColorString
 
     const distance = distanceBetweenPoints(fromPoint, toPoint)
     const kiteHeight = state.maxHeight >= distance ? distance : state.maxHeight
     const kiteWidth = randomInRangeSeeded(5, 20)
     const kiteRatio = 1 - kiteWidth / kiteHeight
 
-    context.save()
-    context.translate(fromPoint.x, fromPoint.y)
-    context.rotate(angleToPoint(fromPoint, toPoint))
-    drawPoints(context, kite(kiteWidth, kiteHeight, kiteRatio))
-    context.restore()
+    ctx.save()
+    ctx.translate(fromPoint.x, fromPoint.y)
+    ctx.rotate(angleToPoint(fromPoint, toPoint))
+    drawPoints(ctx, kite(kiteWidth, kiteHeight, kiteRatio))
+    ctx.restore()
   }
 
-  context.fillStyle = rgbArrayToString([17, 17, 17])
-  context.fillRect(
+  ctx.fillStyle = rgbArrayToString([17, 17, 17])
+  ctx.fillRect(
     0,
     0,
     canvasScaleValue(canvas.clientWidth),
